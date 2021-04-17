@@ -7,89 +7,89 @@ USE OTO;
 CREATE TABLE CARS(
    car_id INT(11) NOT NULL AUTO_INCREMENT,
    car_serial_number INT NOT NULL,
-   car_model VARCHAR(50) NOT NULL,
-   car_mark VARCHAR(50) NOT NULL,
+   car_model VARCHAR(30) NOT NULL,
+   car_mark VARCHAR(30) NOT NULL,
    car_year INT NOT NULL,
-   car_fuel VARCHAR(50)NOT NULL,
-   car_status VARCHAR(50)NOT NULL,
-   PRIMARY KEY(car_id)
-)ENGINE INNODB;
+   car_fuel VARCHAR(30)NOT NULL,
+   car_status VARCHAR(30)NOT NULL,
+   PRIMARY KEY (car_id)
+)ENGINE = INNODB;
 
 CREATE TABLE OPTIONS(
    opt_id INT(11) NOT NULL AUTO_INCREMENT,
-   opt_color VARCHAR(50)NOT NULL,
-   opt_gearbox VARCHAR(50)NOT NULL,
-   opt_seats VARCHAR(50)NOT NULL,
+   opt_color VARCHAR(30)NOT NULL,
+   opt_gearbox VARCHAR(30)NOT NULL,
+   opt_seats VARCHAR(30)NOT NULL,
    opt_gps tinyint(1) DEFAULT '0',
    opt_extra_airbags tinyint(1) DEFAULT '0',
-   opt_security VARCHAR(50)NOT NULL,
-   opt_audio VARCHAR(50)NOT NULL,
-   opt_conduct VARCHAR(50)NOT NULL,
-   opt_saddlery VARCHAR(50)NOT NULL,
-   opt_pack VARCHAR(50)NOT NULL,
-   PRIMARY KEY(opt_id)
-)ENGINE INNODB;
+   opt_security VARCHAR(30)NOT NULL,
+   opt_audio VARCHAR(30)NOT NULL,
+   opt_conduct VARCHAR(30)NOT NULL,
+   opt_saddlery VARCHAR(30)NOT NULL,
+   opt_pack VARCHAR(30)NOT NULL,
+   PRIMARY KEY (opt_id)
+)ENGINE = INNODB;
 
 CREATE TABLE CONCESSION(
-   con_id INT(11) NOT NULL AUTO_INCREMENT
-   con_name VARCHAR(50)NOT NULL,
-   PRIMARY KEY(con_id)NOT NULL
-)ENGINE INNODB;
+   con_id INT(11) NOT NULL AUTO_INCREMENT,
+   con_name VARCHAR(30)NOT NULL,
+   PRIMARY KEY (con_id)
+)ENGINE = INNODB;
 
 CREATE TABLE GARAGE(
    gar_id INT(11) NOT NULL AUTO_INCREMENT,
-   gar_upkeep VARCHAR(50)NOT NULL,
-   gar_mending VARCHAR(50)NOT NULL,
-   gar_price VARCHAR(50)NOT NULL,
+   gar_upkeep VARCHAR(30)NOT NULL,
+   gar_mending VARCHAR(30)NOT NULL,
+   gar_price VARCHAR(30)NOT NULL,
    con_id INT NOT NULL,
-   PRIMARY KEY(gar_id)NOT NULL,
-   FOREIGN KEY(con_id) REFERENCES CONCESSION(con_id)
-)ENGINE INNODB;
+   PRIMARY KEY (gar_id),
+   FOREIGN KEY (con_id) REFERENCES CONCESSION (con_id)
+)ENGINE = INNODB;
 
 CREATE TABLE EMPLOYEES(
    emp_id INT(11) NOT NULL AUTO_INCREMENT,
-   emp_firstname VARCHAR(50)NOT NULL,
-   emp_lastname VARCHAR(50)NOT NULL,
+   emp_firstname VARCHAR(30)NOT NULL,
+   emp_lastname VARCHAR(30)NOT NULL,
    emp_particular tinyint(1) DEFAULT '0',
    emp_professional tinyint(1) DEFAULT '0',
    con_id INT NOT NULL,
-   PRIMARY KEY(emp_id),
-   FOREIGN KEY(con_id) REFERENCES CONCESSION(con_id)
-)ENGINE INNODB;
+   PRIMARY KEY (emp_id),
+   FOREIGN KEY (con_id) REFERENCES CONCESSION (con_id)
+)ENGINE = INNODB;
 
 
 CREATE TABLE CUSTOMERS(
    cus_id INT(11) NOT NULL AUTO_INCREMENT,
-   cus_name VARCHAR(50)NOT NULL,
-   cus_adress VARCHAR(50)NOT NULL,
-   cus_zipcode INT,
-   cus_mail VARCHAR(50)NOT NULL,
-   cus_city VARCHAR(50)NOT NULL,
+   cus_name VARCHAR(30)NOT NULL,
+   cus_adress VARCHAR(30)NOT NULL,
+   cus_zipcode INT NOT NULL,
+   cus_mail VARCHAR(30)NOT NULL,
+   cus_city VARCHAR(30)NOT NULL,
    cus_particular tinyint(1) DEFAULT '0',
    cus_professionnal tinyint(1) DEFAULT '0',
-   cus_salary DECIMAL(20,2)NOT NULL,
+   cus_salary DECIMAL(10,2) DEFAULT 0.00,
    emp_id INT NOT NULL,
-   PRIMARY KEY(cus_id),
-   FOREIGN KEY(emp_id) REFERENCES EMPLOYEES(emp_id)
-)ENGINE INNODB;
+   PRIMARY KEY (cus_id),
+   FOREIGN KEY (emp_id) REFERENCES EMPLOYEES (emp_id)
+)ENGINE = INNODB;
 
 CREATE TABLE ACCESSORIES(
    acc_id INT(11) NOT NULL AUTO_INCREMENT,
-   acc_type VARCHAR(50)NOT NULL,
-   acc_label VARCHAR(50)NOT NULL,
+   acc_type VARCHAR(30)NOT NULL,
+   acc_label VARCHAR(30)NOT NULL,
    gar_id INT NOT NULL,
-   PRIMARY KEY(acc_id)NOT NULL,
-   FOREIGN KEY(gar_id) REFERENCES GARAGE(gar_id)
-)ENGINE INNODB;
+   PRIMARY KEY (acc_id),
+   FOREIGN KEY (gar_id) REFERENCES GARAGE (gar_id)
+)ENGINE = INNODB;
 
 CREATE TABLE EQUIPPING(
    car_id INT,
-   opt_id INT,
-   options_price INT,
-   PRIMARY KEY(car_id, opt_id),
-   FOREIGN KEY(car_id) REFERENCES CARS(car_id),
-   FOREIGN KEY(opt_id) REFERENCES OPTIONS(opt_id)
-)ENGINE INNODB;
+   opt_id INT NOT NULL,
+   options_price INT NOT NULL,
+   PRIMARY KEY (car_id, opt_id),
+   FOREIGN KEY (car_id) REFERENCES CARS (car_id),
+   FOREIGN KEY (opt_id) REFERENCES OPTIONS (opt_id)
+)ENGINE = INNODB;
 
 CREATE TABLE BUY(
    car_id INT NOT NULL,
@@ -97,7 +97,7 @@ CREATE TABLE BUY(
    price INT NOT NULL,
    cash_payement tinyint(1) DEFAULT '0',
    payement_on_credit tinyint(1) DEFAULT '0',
-   PRIMARY KEY(car_id, cus_id),
-   FOREIGN KEY(car_id) REFERENCES CARS(car_id),
-   FOREIGN KEY(cus_id) REFERENCES CUSTOMERS(cus_id)
-)ENGINE INNODB;
+   PRIMARY KEY (car_id, cus_id),
+   FOREIGN KEY (car_id) REFERENCES CARS (car_id),
+   FOREIGN KEY (cus_id) REFERENCES CUSTOMERS (cus_id)
+)ENGINE = INNODB;
